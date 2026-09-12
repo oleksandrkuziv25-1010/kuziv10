@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Завдання 6 та 7 — Товари</title>
+    <script>
+        let product = ["Кабель", "Клавіатура", "Килимок", "Камера"];
+        let quantity = [50, 15, 30, 8];
+        let cost = [120, 850, 250, 1400];
+
+        let selectedIndex6 = -1;
+        let selectedIndex7 = 0;
+
+        function fun1_task6() {
+            let inputName = document.form6.name_prod.value.trim();
+            selectedIndex6 = -1; 
+
+            for (let i = 0; i < product.length; i++) {
+                if (product[i].toLowerCase() === inputName.toLowerCase()) {
+                    selectedIndex6 = i;
+                    break;
+                }
+            }
+
+            if (selectedIndex6 !== -1) {
+                document.form6.output_qty.value = quantity[selectedIndex6] + " шт.";
+                document.form6.output_cost.value = cost[selectedIndex6] + " грн";
+            } else {
+                document.form6.output_qty.value = "Товар не знайдено!";
+                document.form6.output_cost.value = "Товар не знайдено!";
+            }
+        }
+
+        function fun2_task6() {
+            if (selectedIndex6 !== -1) {
+                let total = quantity[selectedIndex6] * cost[selectedIndex6];
+                document.getElementById("total_res6").innerText = 
+                    "Загальна вартість товару '" + product[selectedIndex6] + "' на складі: " + total + " грн.";
+            } else {
+                document.getElementById("total_res6").innerText = 
+                    "Спочатку знайдіть товар за допомогою кнопки 'Наявна кількість і вартість'!";
+            }
+        }
+
+        function fun1_task7() {
+            let selectElem = document.form7.select_prod;
+            selectedIndex7 = selectElem.selectedIndex;
+
+            document.form7.output_qty.value = quantity[selectedIndex7] + " шт.";
+            document.form7.output_cost.value = cost[selectedIndex7] + " грн";
+        }
+
+        function fun2_task7() {
+            let total = quantity[selectedIndex7] * cost[selectedIndex7];
+            document.getElementById("total_res7").innerText = 
+                "Загальна вартість товару '" + product[selectedIndex7] + "' на складі: " + total + " грн.";
+        }
+    </script>
+</head>
+<body>
+    <p><a href="lab1.html">Назад до Головної (Завдання 1-5)</a></p>
+    <hr>
+
+    <h2>Завдання 6:</h2>
+    <form name="form6">
+        Введіть назву товару (Кабель, Клавіатура, Килимок, Камера):<br>
+        <input type="text" name="name_prod">
+        <input type="button" value="Наявна кількість і вартість" onClick="fun1_task6()"><br><br>
+        
+        Наявна кількість на складі: <input type="text" name="output_qty" size="40" readonly><br><br>
+        Вартість за одиницю: <input type="text" name="output_cost" size="40" readonly><br><br>
+        
+        <input type="button" value="Загальна сума" onClick="fun2_task6()">
+    </form>
+    <p id="total_res6" style="font-weight: bold; color: darkgreen;"></p>
+
+    <hr>
+
+    <h2>Завдання 7:Модифікація</h2>
+    <form name="form7">
+        Оберіть товар зі списку:<br>
+        <select name="select_prod">
+            <option value="0">Кабель</option>
+            <option value="1">Клавіатура</option>
+            <option value="2">Килимок</option>
+            <option value="3">Камера</option>
+        </select>
+        <input type="button" value="Наявна кількість і вартість" onClick="fun1_task7()"><br><br>
+        
+        Наявна кількість на складі: <input type="text" name="output_qty" size="40" readonly><br><br>
+        Вартість за одиницю: <input type="text" name="output_cost" size="40" readonly><br><br>
+        
+        <input type="button" value="Загальна сума" onClick="fun2_task7()">
+    </form>
+    <p id="total_res7" style="font-weight: bold; color: darkblue;"></p>
+</body>
+</html>
