@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Завдання 6 та 7 — Обробка масиву імен</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 20px;
+        }
+        .info-box {
+            background-color: #eef9ff;
+            border-left: 4px solid #007bff;
+            padding: 15px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <p><a href="../index.html">На головну сторінку</a></p>
+    <hr>
+
+    <h2>Завдання 6 та 7 — Селекціонування імен у консолі</h2>
+
+    <div class="info-box">
+        <ul>
+            <li>Натисніть <b>F12</b></li>
+            <li>Перейдіть на вкладку <b>Console</b></li>
+        </ul>
+    </div>
+
+    <script>
+        console.log("ЗАВДАННЯ 6");
+
+        const names = ["Andrew", "Bob", "Elena", "Igor", "John", "Olga", "Peter", "Ulysses", "Victor"];
+        const vowels = ['A', 'E', 'I', 'O', 'U', 'a', 'e', 'i', 'o', 'u'];
+
+        names.forEach(name => {
+            let firstChar = name.charAt(0);
+            if (vowels.includes(firstChar)) {
+                console.log(`Goodbye ${name}`);
+            } else {
+                console.log(`Hello ${name}`);
+            }
+        });
+
+        console.log("\nЗАВДАННЯ 7");
+        console.log("АНОТАЦІЯ ПІДХОДУ:");
+        console.log("Застосовано метод селекції за сумою ASCII-кодів усіх літер імені.");
+        console.log("Якщо сума ASCII-кодів > 400, людина отримує розширене [VIP Hello], інакше — [Standard Hello].\n");
+
+        const ASCII_THRESHOLD = 400;
+
+        names.forEach(name => {
+            let asciiSum = 0;
+            for (let i = 0; i < name.length; i++) {
+                asciiSum += name.charCodeAt(i);
+            }
+
+            if (asciiSum > ASCII_THRESHOLD) {
+                console.log(`[VIP Hello] ${name} (Сума ASCII: ${asciiSum} > ${ASCII_THRESHOLD})`);
+            } else {
+                console.log(`[Standard Hello] ${name} (Сума ASCII: ${asciiSum} <= ${ASCII_THRESHOLD})`);
+            }
+        });
+    </script>
+</body>
+</html>

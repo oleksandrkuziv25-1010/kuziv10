@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Завдання 4 та 5 — Методи console</title>
+</head>
+<body>
+
+    <p><a href="../index.html">На головну сторінку</a></p>
+    <hr>
+
+    <h2>Завдання 4 та 5 — Дослідження методів об'єкта console</h2>
+
+    <div class="info-box">
+        <ul>
+            <li>Натисніть клавішу <b>F12</b></li>
+            <li>Перейдіть на вкладку <b>Console</b></li>
+        </ul>
+    </div>
+
+    <script>
+        console.log("ЗАВДАННЯ 4");
+
+        let num1 = 17;
+        let num2 = 5;
+        let remainder = num1 % num2;
+        console.log("1. Остача від ділення %d на %d дорівнює: %d", num1, num2, remainder);
+
+        let isZero1 = (remainder === 0);
+        console.log("2. Перевірка рівності нулю остачі (17 % 5 === 0):", isZero1);
+
+        let myArray = [10, 25, 50];
+        console.log("3. Елементи масиву як числа: %d, %d, %d", myArray[0], myArray[1], myArray[2]);
+        console.log("Перший елемент як рядок: %s", myArray[0]);
+
+        console.log("\nЗАВДАННЯ 5");
+
+        console.info("console.info(): Інформаційне повідомлення про процес.");
+        console.warn("console.warn(): Попередження про можливу проблему у коді!");
+        console.error("console.error(): Повідомлення про критичну помилку!");
+
+        let sampleObject = { id: 15, name: "Іван", role: "Student" };
+        console.log("console.dir() — вивід структури об'єкта:");
+        console.dir(sampleObject);
+
+        console.log("console.dirxml() — вивід HTML/XML структури елемента:");
+        console.dirxml(document.body);
+
+        console.time("Таймер_Тесту");
+        let sum = 0;
+        for (let i = 0; i < 100000; i++) {
+            sum += i;
+        }
+        console.timeEnd("Таймер_Тесту"); -
+
+        console.profile("Профіль_Продуктивності");
+        let dummyList = Array.from({ length: 5000 }, (_, index) => index * 2);
+        console.profileEnd("Профіль_Продуктивності");
+
+        console.assert(2 + 2 === 5, "console.assert(): Помилка! 2 + 2 не дорівнює 5!");
+        console.assert(2 + 2 === 4, "Це повідомлення НЕ з'явиться, бо умова істинна");
+    </script>
+</body>
+</html>

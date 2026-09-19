@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Завдання 3 — Варіант 15</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 20px;
+        }
+        table {
+            margin-top: 15px;
+            border-collapse: collapse;
+        }
+        td {
+            padding: 4px;
+        }
+        input[type="text"], input[type="number"] {
+            padding: 4px;
+            text-align: center;
+        }
+        .matrix-input {
+            width: 65px;
+        }
+    </style>
+</head>
+<body>
+
+    <p><a href="../index.html">На головну сторінку</a></p>
+    <hr>
+
+    <h2>Завдання 3</h2>
+    <p>Формула елемента: <b>A= 7j + 2i</b></p>
+    <p>Завдання: <b>підрахувати добуток елементів останнього стовпця</b></p>
+
+    <form id="main_form">
+        <table>
+            <tr>
+                <td>Кількість рядків:</td>
+                <td><input type="number" id="t_str" value="4" min="1"></td>
+            </tr>
+            <tr>
+                <td>Кількість стовпців:</td>
+                <td><input type="number" id="t_stb" value="4" min="1"></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <br>
+                    <input type="button" onClick="fun();" value="Побудувати матрицю">
+                    <input type="button" onClick="fun_build();" value="Розрахувати">
+                </td>
+            </tr>
+        </table>
+
+        <div id="main_div"></div>
+    </form>
+
+    <script>
+        let str, stb;
+
+        function fun() {
+            str = parseInt(document.getElementById('t_str').value) || 0;
+            stb = parseInt(document.getElementById('t_stb').value) || 0;
+
+            if (str <= 0 || stb <= 0) {
+                alert("Введіть коректні значення рядків і стовпців!");
+                return;
+            }
+
+            let res_str = "<table border='1'>\n";
+
+            for (let i = 1; i <= str; i++) {
+                res_str += "<tr>\n";
+                for (let j = 1; j <= stb; j++) {
+                    let val = 7 * j + 2 * i;
+                    res_str += "<td>";
+                    res_str += `<input type="text" class="matrix-input" id="_${i}_${j}" value="${val}">`;
+                    res_str += "</td>\n";
+                }
+                res_str += "</tr>\n";
+            }
+            res_str += "</table>";
+
+            document.getElementById('main_div').innerHTML = res_str;
+        }
+
+        function fun_build() {
+            if (!str || !stb) {
+                alert("Спочатку побудуйте матрицю!");
+                return;
+            }
+
+            let product = 1;
+            let report = `Елементи останнього (№${stb}) стовпця:\n`;
+
+            for (let i = 1; i <= str; i++) {
+                let elemVal = parseFloat(document.getElementById(`_${i}_${stb}`).value) || 0;
+                product *= elemVal;
+                report += `Рядок ${i}, стовпець ${stb} = ${elemVal}\n`;
+            }
+
+            report += `\nДобуток елементів останнього стовпця = ${product}`;
+            alert(report);
+        }
+    </script>
+</body>
+</html>
