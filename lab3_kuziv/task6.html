@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Завдання 6</title>
+  <style>
+    .task-block {
+      margin-bottom: 20px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      background-color: #f9f9f9;
+      width: 350px;
+    }
+    .toggle-main-btn {
+      padding: 8px 16px;
+      font-size: 15px;
+      margin-bottom: 20px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <a href="../index.html">На головну сторінку</a>
+  <hr>
+
+  <h1>Завдання 6 (Варіант 5)</h1>
+
+  <button id="toggle-state-btn" class="toggle-main-btn">Перейти в кінцевий стан</button>
+
+  <h1 id="header-main">Головний заголовок</h1>
+
+  <div class="task-block">
+    <h3>Завдання 6.1</h3>
+    <p>Статус: <span id="status">Очікування...</span></p>
+  </div>
+
+  <div class="task-block">
+    <h3>Завдання 6.2</h3>
+    <button id="submit-btn">Кнопка форми</button>
+    <p id="timer-info" style="font-size: 13px; color: #555;"></p>
+  </div>
+
+  <script>
+    const toggleBtn = document.getElementById('toggle-state-btn');
+    const statusSpan = document.getElementById('status');
+    const submitBtn = document.getElementById('submit-btn');
+    const headerMain = document.getElementById('header-main');
+    const timerInfo = document.getElementById('timer-info');
+
+    let isFinalState = false;
+    let timerId = null;
+
+    toggleBtn.addEventListener('click', () => {
+      if (!isFinalState) {
+
+        statusSpan.textContent = 'Успішно завершено!';
+
+        submitBtn.disabled = true;
+        timerInfo.textContent = 'Кнопку деактивовано на 5 секунд...';
+
+        clearTimeout(timerId);
+        timerId = setTimeout(() => {
+          submitBtn.disabled = false;
+          timerInfo.textContent = 'Кнопка знову активна!';
+        }, 5000);
+
+        headerMain.style.textAlign = 'center';
+        headerMain.style.borderBottom = '2px solid black';
+
+        toggleBtn.textContent = 'Перейти в початковий стан';
+        isFinalState = true;
+
+      } else {
+
+        statusSpan.textContent = 'Очікування...';
+
+        clearTimeout(timerId);
+        submitBtn.disabled = false;
+        timerInfo.textContent = '';
+
+        headerMain.style.textAlign = 'left';
+        headerMain.style.borderBottom = 'none';
+
+        toggleBtn.textContent = 'Перейти в кінцевий стан';
+        isFinalState = false;
+      }
+    });
+  </script>
+
+</body>
+</html>

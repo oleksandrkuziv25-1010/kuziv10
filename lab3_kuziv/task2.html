@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Завдання 2 та 3</title>
+  <style>
+    .calculator {
+      width: 240px;
+      border: 1px solid #333;
+      padding: 10px;
+      background-color: #f4f4f4;
+    }
+    .toggle-btn {
+      width: 100%;
+      padding: 6px;
+      margin-bottom: 10px;
+      cursor: pointer;
+    }
+    .display {
+      width: 100%;
+      height: 35px;
+      font-size: 18px;
+      text-align: right;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+      padding-right: 5px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 5px;
+    }
+    .grid button {
+      height: 35px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .eng-panel {
+      display: none; /* За замовчуванням приховано (Простий режим) */
+      grid-template-columns: repeat(4, 1fr);
+      gap: 5px;
+      margin-top: 5px;
+    }
+    .eng-panel.active {
+      display: grid; /* Показуємо при включенні Інженерного режиму */
+    }
+    .btn-equal {
+      grid-column: span 2;
+    }
+  </style>
+</head>
+<body>
+
+  <a href="../index.html">На головну сторінку</a>
+  <hr>
+
+  <h1>Завдання 2 та 3</h1>
+
+  <div class="calculator">
+    <!-- Кнопка перемикання між Простим та Інженерним калькулятором -->
+    <button id="toggle-mode" class="toggle-btn">Переключити на Інженерний</button>
+
+    <!-- Табло виводу -->
+    <input type="text" id="display" class="display" readonly value="0">
+    
+    <!-- Кнопки простого калькулятора (Завдання 2) -->
+    <div class="grid">
+      <button onclick="clearCalc()">C</button>
+      <button onclick="toggleSign()">+/-</button>
+      <button onclick="appendChar('%')">%</button>
+      <button onclick="appendChar('/')">/</button>
+
+      <button onclick="appendChar('7')">7</button>
+      <button onclick="appendChar('8')">8</button>
+      <button onclick="appendChar('9')">9</button>
+      <button onclick="appendChar('*')">*</button>
+
+      <button onclick="appendChar('4')">4</button>
+      <button onclick="appendChar('5')">5</button>
+      <button onclick="appendChar('6')">6</button>
+      <button onclick="appendChar('-')">-</button>
+
+      <button onclick="appendChar('1')">1</button>
+      <button onclick="appendChar('2')">2</button>
+      <button onclick="appendChar('3')">3</button>
+      <button onclick="appendChar('+')">+</button>
+
+      <button onclick="appendChar('0')">0</button>
+      <button onclick="appendChar('.')">.</button>
+      <button onclick="calculate()" class="btn-equal">=</button>
+    </div>
+
+    <!-- Додаткові інженерні кнопки (Завдання 3) -->
+    <div id="eng-panel" class="eng-panel">
+      <button onclick="calcEng('sqrt')">√</button>
+      <button onclick="calcEng('pow2')">x²</button>
+      <button onclick="calcEng('sin')">sin</button>
+      <button onclick="calcEng('cos')">cos</button>
+    </div>
+  </div>
+
+  <script>
+    const display = document.getElementById('display');
+    const toggleBtn = document.getElementById('toggle-mode');
+    const engPanel = document.getElementById('eng-panel');
+
+    // Введення символів
+    function appendChar(char) {
+      if (display.value === '0' && char !== '.') {
+        display.value = '';
+      }
+      display.value += char;
+    }
+
+    // Очищення
+    function clearCalc() {
+      display.value = '0';
+    }
+
+    // Додавання/видалення знака "-" (знак +/-)
+    function toggleSign() {
+      if (display.value.startsWith('-')) {
+        display.value = display.value.slice(1);
+      } else if (display.value !== '0' && display.value !== '') {
+        display.value = '-' + display.value;
+      }
+    }
+
+    // Обчислення математичного виразу
+    function calculate() {
+      try {
+        display.value = eval(display.value);
+      } catch (e) {
+        display.value = 'Помилка';
+      }
+    }
+
+    // Інженерні функції (корінь, квадрат, синус, косинус)
+    function calcEng(fn) {
+      let val = parseFloat(display.value);
+      if (isNaN(val)) return;
+
+      if (fn === 'sqrt') display.value = Math.sqrt(val);
+      if (fn === 'pow2') display.value = Math.pow(val, 2);
+      if (fn === 'sin') display.value = Math.sin(val * Math.PI / 180).toFixed(4);
+      if (fn === 'cos') display.value = Math.cos(val * Math.PI / 180).toFixed(4);
+    }
+
+    // Логіка перемикання тексту кнопки та видимості інженерних кнопок
+    toggleBtn.addEventListener('click', () => {
+      engPanel.classList.toggle('active');
+      if (engPanel.classList.contains('active')) {
+        toggleBtn.textContent = 'Переключити на Простий';
+      } else {
+        toggleBtn.textContent = 'Переключити на Інженерний';
+      }
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Завдання 5</title>
+  <style>
+    .tree-title {
+      cursor: pointer;
+      font-weight: bold;
+      color: #0000ee;
+      text-decoration: underline;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <a href="../index.html">На головну сторінку</a>
+  <hr>
+
+  <h1>Завдання 5</h1>
+
+  <div>
+    <span class="tree-title" onclick="toggleTree('fruits-list')">fruits:</span>
+    <ol id="fruits-list">
+      <li>apple</li>
+      <li>pineapple;</li>
+      <li>appricot;</li>
+      <li>pear;</li>
+      <li>lemon;</li>
+    </ol>
+  </div>
+
+  <div>
+    <span class="tree-title" onclick="toggleTree('veg-list')">vegetables:</span>
+    <ol id="veg-list">
+      <li>potatoes;</li>
+      <li>beetroot;</li>
+      <li>carrots;</li>
+      <li>pear;</li>
+    </ol>
+  </div>
+
+  <script>
+    function toggleTree(listId) {
+      const list = document.getElementById(listId);
+      if (list) {
+        list.classList.toggle('hidden');
+      }
+    }
+  </script>
+
+</body>
+</html>

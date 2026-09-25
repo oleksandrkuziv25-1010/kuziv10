@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Завдання 1</title>
+</head>
+<body>
+
+  <a href="../index.html">На головну сторінку</a>
+  <hr>
+
+  <h1>Завдання 1</h1>
+
+  <p><b>Розрахунок площі ромба</b></p>
+
+  <p>
+    <label for="d1">Діагональ 1 (d₁):</label><br>
+    <input type="number" id="d1" min="0">
+  </p>
+
+  <p>
+    <label for="d2">Діагональ 2 (d₂):</label><br>
+    <input type="number" id="d2" min="0">
+  </p>
+
+  <p>
+    <label for="area">Площа (S):</label><br>
+    <input type="text" id="area" readonly value="0">
+  </p>
+
+  <script>
+    const d1Input = document.getElementById('d1');
+    const d2Input = document.getElementById('d2');
+    const areaInput = document.getElementById('area');
+
+    function calculateArea() {
+      const d1 = parseFloat(d1Input.value) || 0;
+      const d2 = parseFloat(d2Input.value) || 0;
+
+      const area = (d1 * d2) / 2;
+      areaInput.value = area > 0 ? area.toFixed(2) : 0;
+    }
+
+    d1Input.addEventListener('input', calculateArea);
+    d2Input.addEventListener('input', calculateArea);
+  </script>
+
+</body>
+</html>
