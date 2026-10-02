@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лабораторна робота №4 </title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f4f7f6;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .navbar {
+            background-color: #2c3e50;
+            color: #fff;
+            padding: 15px 20px;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+
+        .logo {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .burger-icon {
+            display: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #1abc9c;
+        }
+
+        @media (max-width: 768px) {
+            .burger-icon {
+                display: block;
+            }
+
+            .nav-links {
+                display: block;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: #34495e;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out;
+                z-index: 10;
+                border-radius: 0 0 8px 8px;
+            }
+
+            .nav-links.active {
+                max-height: 250px;
+                padding: 10px 0;
+            }
+
+            .nav-links li {
+                text-align: center;
+                padding: 10px 0;
+            }
+        }
+
+        .tab-buttons {
+            display: flex;
+            background-color: #dcdde1;
+            border-bottom: 2px solid #bdc3c7;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 14px 20px;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            background-color: #dcdde1; 
+            color: #7f8c8d;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .tab-btn.active {
+            background-color: #ffffff; 
+            color: #2c3e50;
+            border-top: 3px solid #1abc9c;
+        }
+
+        .tab-content {
+            display: none;
+            background-color: #ffffff; 
+            padding: 25px;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .question-block {
+            margin-bottom: 22px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-left: 4px solid #1abc9c;
+            border-radius: 4px;
+        }
+
+        .question-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .options label {
+            display: block;
+            margin-bottom: 6px;
+            cursor: pointer;
+        }
+
+        select, input[type="text"] {
+            width: 100%;
+            padding: 8px 12px;
+            margin-top: 6px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        select[multiple] {
+            height: 100px;
+        }
+
+        .btn-submit {
+            background-color: #1abc9c;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 15px;
+            transition: background-color 0.3s;
+        }
+
+        .btn-submit:hover {
+            background-color: #16a085;
+        }
+
+        #resultsSection {
+            margin-top: 30px;
+            display: none;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #2c3e50;
+            color: white;
+        }
+
+        .total-score {
+            margin-top: 15px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #2c3e50;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+  <a href="../index.html">На головну сторінку</a>
+  <hr>
+
+<div class="container">
+    <nav class="navbar">
+        <div class="logo">Лабораторна №4</div>
+        <div class="burger-icon" id="burgerBtn">&#9776;</div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#" onclick="openTab('quiz')">Тестування</a></li>
+            <li><a href="#" onclick="openTab('theory')">Теорія</a></li>
+            <li><a href="#resultsSection">Результати</a></li>
+        </ul>
+    </nav>
+
+    <div class="tab-buttons">
+        <button class="tab-btn active" id="btn-quiz" onclick="openTab('quiz')">Тестування</button>
+        <button class="tab-btn" id="btn-theory" onclick="openTab('theory')">Теоретичні відомості</button>
+    </div>
+
+    <div id="quiz" class="tab-content active">
+        <h2>Тест з JavaScript та DOM</h2>
+        <p style="margin-bottom: 20px; color: #666;">Дайте відповіді на 7 запитань нижче.</p>
+
+        <form id="quizForm">
+            <div class="question-block">
+                <div class="question-title">1. Який метод DOM використовується для пошуку елемента за унікальним ідентифікатором?</div>
+                <div class="options">
+                    <label><input type="radio" name="q1" value="1"> document.getElementById()</label>
+                    <label><input type="radio" name="q1" value="-1"> document.getElementsByClassName()</label>
+                    <label><input type="radio" name="q1" value="-1"> document.querySelector()</label>
+                    <label><input type="radio" name="q1" value="-1"> document.getElementsByTagName()</label>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-title">2. Який оператор виконує суворе порівняння за значенням і типом даних?</div>
+                <div class="options">
+                    <label><input type="radio" name="q2" value="-1"> ==</label>
+                    <label><input type="radio" name="q2" value="1"> ===</label>
+                    <label><input type="radio" name="q2" value="-1"> =</label>
+                    <label><input type="radio" name="q2" value="-1"> !=</label>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-title">3. Оберіть примітивні типи даних у JavaScript (2 правильні відповіді):</div>
+                <div class="options">
+                    <label><input type="checkbox" name="q3" value="1"> String</label>
+                    <label><input type="checkbox" name="q3" value="-1"> Object</label>
+                    <label><input type="checkbox" name="q3" value="1"> Number</label>
+                    <label><input type="checkbox" name="q3" value="-1"> Array</label>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-title">4. Оберіть стандартні події миші в DOM (3 правильні відповіді):</div>
+                <div class="options">
+                    <label><input type="checkbox" name="q4" value="1"> click</label>
+                    <label><input type="checkbox" name="q4" value="1"> mouseover</label>
+                    <label><input type="checkbox" name="q4" value="-1"> keydown</label>
+                    <label><input type="checkbox" name="q4" value="1"> mouseup</label>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-title">5. Оберіть властивість для зміни безпечного текстового вмісту елемента:</div>
+                <select name="q5">
+                    <option value="0">-- Оберіть варіант --</option>
+                    <option value="-1">innerHTML</option>
+                    <option value="1">textContent</option>
+                    <option value="-1">value</option>
+                    <option value="-1">style</option>
+                </select>
+            </div>
+
+            <div class="question-block">
+                <div class="question-title">6. Які з наведених методів повертають колекцію або вузол DOM? (Затисніть Ctrl/Cmd для вибору кількох):</div>
+                <select name="q6" multiple>
+                    <option value="1">querySelectorAll()</option>
+                    <option value="-1">getElementByTag()</option>
+                    <option value="1">getElementsByClassName()</option>
+                    <option value="-1">findDOMElement()</option>
+                </select>
+            </div>
+
+            <div class="question-block">
+                <div class="question-title">7. Введіть назву ключового слова для оголошення константи у JS:</div>
+                <input type="text" name="q7" placeholder="Ваша відповідь...">
+            </div>
+
+            <button type="button" class="btn-submit" onclick="finishTest()">Завершити тестування</button>
+        </form>
+
+        <div id="resultsSection">
+            <h3>Результати тестування</h3>
+            <table id="resultsTable">
+                <thead>
+                    <tr>
+                        <th>№ / Питання</th>
+                        <th>Обрані відповіді</th>
+                        <th>Бал за питання</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <div class="total-score">Загальний бал: <span id="totalScore">0</span></div>
+        </div>
+    </div>
+
+    <div id="theory" class="tab-content">
+        <h2>Теоретичні відомості</h2>
+        <hr style="margin: 15px 0;">
+        
+        <h3>1. Пошук елементів у DOM</h3>
+        <p>Для роботи з елементами сторінки у JavaScript використовуються методи об'єкта <code>document</code>:</p>
+        <ul style="margin-left: 20px; margin-bottom: 15px;">
+            <li><code>document.getElementById('id')</code> — шукає унікальний елемент за ID.</li>
+            <li><code>document.querySelector('selector')</code> — повертає перший елемент, що відповідає CSS-селектору.</li>
+            <li><code>document.querySelectorAll('selector')</code> — повертає статичний список <code>NodeList</code> усіх відповідних елементів.</li>
+            <li><code>document.getElementsByClassName('class')</code> — повертає динамічну HTML-колекцію елементів з відповідним класом.</li>
+        </ul>
+
+        <h3>2. Опрацювання елементів форм</h3>
+        <p>Доступ до елементів форми здійснюється через колекцію <code>document.forms</code> або за допомогою атрибута <code>name</code>:</p>
+        <ul style="margin-left: 20px; margin-bottom: 15px;">
+            <li><b>Радіокнопки (Radio):</b> визначаються станом <code>element.checked</code>. В один момент активна лише одна кнопка з групи.</li>
+            <li><b>Прапорці (Checkbox):</b> дозволяють множинний вибір, кожен чекбокс перевіряється окремо через <code>checked</code>.</li>
+            <li><b>Списки (Select):</b> одиночний вибір зчитується через <code>select.value</code>, множинний — ітерацією по колекції <code>select.options</code> із перевіркою властивості <code>option.selected</code>.</li>
+            <li><b>Текстові поля:</b> значення зчитується за допомогою властивості <code>input.value</code>.</li>
+        </ul>
+    </div>
+</div>
+
+<script>
+    const burgerBtn = document.getElementById('burgerBtn');
+    const navLinks = document.getElementById('navLinks');
+
+    burgerBtn.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+    });
+
+    function openTab(tabId) {
+        const contents = document.querySelectorAll('.tab-content');
+        const buttons = document.querySelectorAll('.tab-btn');
+
+        contents.forEach(content => content.classList.remove('active'));
+        buttons.forEach(btn => btn.classList.remove('active'));
+
+        document.getElementById(tabId).classList.add('active');
+        document.getElementById('btn-' + tabId).classList.add('active');
+
+        navLinks.classList.remove('active');
+    }
+
+    function finishTest() {
+        const form = document.forms['quizForm'];
+        const tbody = document.querySelector('#resultsTable tbody');
+        tbody.innerHTML = '';
+        let grandTotal = 0;
+
+        function calcQuestionScore(scoreSum) {
+            return Math.max(0, scoreSum);
+        }
+
+        let q1Score = 0, q1Text = "Відповідь не надана";
+        const q1Selected = form.querySelector('input[name="q1"]:checked');
+        if (q1Selected) {
+            q1Text = q1Selected.parentElement.textContent.trim();
+            q1Score = parseFloat(q1Selected.value);
+        }
+        q1Score = calcQuestionScore(q1Score);
+
+        let q2Score = 0, q2Text = "Відповідь не надана";
+        const q2Selected = form.querySelector('input[name="q2"]:checked');
+        if (q2Selected) {
+            q2Text = q2Selected.parentElement.textContent.trim();
+            q2Score = parseFloat(q2Selected.value);
+        }
+        q2Score = calcQuestionScore(q2Score);
+
+        let q3ScoreRaw = 0, q3Ans = [];
+        const q3Selected = form.querySelectorAll('input[name="q3"]:checked');
+        q3Selected.forEach(cb => {
+            q3Ans.push(cb.parentElement.textContent.trim());
+            q3ScoreRaw += parseFloat(cb.value);
+        });
+        let q3Score = calcQuestionScore(q3ScoreRaw);
+        let q3Text = q3Ans.length ? q3Ans.join(', ') : "Відповідь не надана";
+
+        let q4ScoreRaw = 0, q4Ans = [];
+        const q4Selected = form.querySelectorAll('input[name="q4"]:checked');
+        q4Selected.forEach(cb => {
+            q4Ans.push(cb.parentElement.textContent.trim());
+            q4ScoreRaw += parseFloat(cb.value);
+        });
+        let q4Score = calcQuestionScore(q4ScoreRaw);
+        let q4Text = q4Ans.length ? q4Ans.join(', ') : "Відповідь не надана";
+
+        let q5Score = 0, q5Text = "Відповідь не надана";
+        const q5Select = form.elements['q5'];
+        if (q5Select.selectedIndex > 0) {
+            const opt = q5Select.options[q5Select.selectedIndex];
+            q5Text = opt.text;
+            q5Score = parseFloat(opt.value);
+        }
+        q5Score = calcQuestionScore(q5Score);
+
+        let q6ScoreRaw = 0, q6Ans = [];
+        const q6Select = form.elements['q6'];
+        for (let opt of q6Select.options) {
+            if (opt.selected) {
+                q6Ans.push(opt.text);
+                q6ScoreRaw += parseFloat(opt.value);
+            }
+        }
+        let q6Score = calcQuestionScore(q6ScoreRaw);
+        let q6Text = q6Ans.length ? q6Ans.join(', ') : "Відповідь не надана";
+
+        let q7Score = 0;
+        const q7Val = form.elements['q7'].value.trim();
+        let q7Text = q7Val !== "" ? q7Val : "Відповідь не надана";
+        if (q7Val.toLowerCase() === 'const') {
+            q7Score = 1;
+        } else if (q7Val !== "") {
+            q7Score = -1;
+        }
+        q7Score = calcQuestionScore(q7Score);
+
+        const results = [
+            { num: "1 (Radio)", text: q1Text, score: q1Score },
+            { num: "2 (Radio)", text: q2Text, score: q2Score },
+            { num: "3 (Checkbox - 2 прав.)", text: q3Text, score: q3Score },
+            { num: "4 (Checkbox - 3 прав.)", text: q4Text, score: q4Score },
+            { num: "5 (Select single)", text: q5Text, score: q5Score },
+            { num: "6 (Select multiple)", text: q6Text, score: q6Score },
+            { num: "7 (Text Input)", text: q7Text, score: q7Score }
+        ];
+
+        results.forEach(res => {
+            grandTotal += res.score;
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>Питання ${res.num}</td>
+                <td>${res.text}</td>
+                <td><strong>${res.score}</strong></td>
+            `;
+            tbody.appendChild(tr);
+        });
+
+        document.getElementById('totalScore').textContent = grandTotal;
+        
+        const resultsSection = document.getElementById('resultsSection');
+        resultsSection.style.display = 'block';
+        resultsSection.scrollIntoView({ behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>
