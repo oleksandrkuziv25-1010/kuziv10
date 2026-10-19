@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Лабораторна робота 6 (Варіант 5)</title>
+    <style>
+        body { font-family: Arial, sans-serif; 
+            margin: 20px; 
+            line-height: 1.6; 
+            background-color: #f9f9f9; 
+        }
+        h1, h2 { 
+            color: #333; 
+        }
+        .card { 
+            background: #fff; 
+            padding: 15px; 
+            margin-bottom: 15px; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+        }
+        input, button { 
+            padding: 8px; 
+            margin: 5px 0; 
+            border: 1px solid #ccc; 
+            border-radius: 4px; 
+        }
+        button { 
+            background-color: #007bff; 
+            color: white; 
+            cursor: pointer; 
+            border: none; 
+        }
+        button:hover { 
+            background-color: #0056b3;
+        }
+        .result {
+             margin-top: 10px; 
+             font-weight: bold; 
+             color: #2e7d32; 
+            }
+    </style>
+</head>
+<body>
+    <a href="../index.html">На головну сторінку</a>
+
+<h1>Лабораторна робота №6 (Варіант 5)</h1>
+
+<div class="card">
+    <h3>Завдання 1. Довжина рядка</h3>
+    <input type="text" id="t1-input" placeholder="Введіть рядок">
+    <button onclick="run1()">Обчислити</button>
+    <div class="result" id="t1-out"></div>
+</div>
+
+<div class="card">
+    <h3>Завдання 2. Зміна регістру</h3>
+    <input type="text" id="t2-input" placeholder="Введіть рядок">
+    <button onclick="run2()">Перетворити</button>
+    <div class="result" id="t2-out"></div>
+</div>
+
+<div class="card">
+    <h3>Завдання 3. Індекс першого входження</h3>
+    <input type="text" id="t3-str" placeholder="Введіть рядок">
+    <input type="text" id="t3-char" maxlength="1" placeholder="Символ">
+    <button onclick="run3()">Знайти індекс</button>
+    <div class="result" id="t3-out"></div>
+</div>
+
+<div class="card">
+    <h3>Завдання 4. Кількість входжень символу</h3>
+    <input type="text" id="t4-str" placeholder="Введіть рядок (напр: hello world)">
+    <input type="text" id="t4-char" maxlength="1" placeholder="Символ (напр: o)">
+    <button onclick="run4()">Порахувати</button>
+    <div class="result" id="t4-out"></div>
+</div>
+
+<div class="card">
+    <h3>Завдання 5. Обмін сусідніх символів</h3>
+    <input type="text" id="t5-input" placeholder="Введіть рядок (напр: abcdef)">
+    <button onclick="run5()">Змінити місцями</button>
+    <div class="result" id="t5-out"></div>
+</div>
+
+<div class="card">
+    <h3>Завдання 6. Перевірка на спам</h3>
+    <input type="text" id="t6-input" placeholder="Введіть текст">
+    <button onclick="run6()">Перевірити</button>
+    <div class="result" id="t6-out"></div>
+</div>
+
+<div class="card">
+    <h3>Завдання 7. Скорочення рядка </h3>
+    <input type="text" id="t7-str" placeholder="Введіть рядок">
+    <input type="number" id="t7-len" placeholder="Макс. довжина (напр: 8)">
+    <button onclick="run7()">Скоротити</button>
+    <div class="result" id="t7-out"></div>
+</div>
+
+<div class="card">
+    <h3>Завдання 8 (Варіант 5). Заміна дубльованих символів на '?'</h3>
+    <input type="text" id="t8-input" placeholder="Введіть рядок (напр: aabbccddde)">
+    <button onclick="run8()">Виконати</button>
+    <div class="result" id="t8-out"></div>
+</div>
+
+<div class="card">
+    <h3>Завдання 9 (Варіант 5). Слова з великої літери </h3>
+    <input type="text" id="t9-input" placeholder="Введіть рядок (напр: hello world)">
+    <button onclick="run9()">Виконати</button>
+    <div class="result" id="t9-out"></div>
+</div>
+
+<div class="card">
+    <h3>Завдання 10 (Варіант 5). Перший повторюваний підрядок</h3>
+    <input type="text" id="t10-input" placeholder="Введіть рядок (напр: ABССABABСС)">
+    <button onclick="run10()">Знайти</button>
+    <div class="result" id="t10-out"></div>
+</div>
+
+<script>
+function getStringLength(str) {
+    return str.length;
+}
+function run1() {
+    const val = document.getElementById('t1-input').value;
+    document.getElementById('t1-out').innerText = "Довжина: " + getStringLength(val);
+}
+
+function toUpperAndLower(str) {
+    return `Верхній: ${str.toUpperCase()} | Нижній: ${str.toLowerCase()}`;
+}
+function run2() {
+    const val = document.getElementById('t2-input').value;
+    document.getElementById('t2-out').innerText = toUpperAndLower(val);
+}
+
+function findFirstCharIndex(str, char) {
+    return str.indexOf(char);
+}
+function run3() {
+    const str = document.getElementById('t3-str').value;
+    const char = document.getElementById('t3-char').value;
+    document.getElementById('t3-out').innerText = "Індекс: " + findFirstCharIndex(str, char);
+}
+
+function countCharOccurrences(str, char) {
+    if (!char) return 0;
+    return str.split(char).length - 1;
+}
+function run4() {
+    const str = document.getElementById('t4-str').value;
+    const char = document.getElementById('t4-char').value;
+    document.getElementById('t4-out').innerText = "Кількість входжень: " + countCharOccurrences(str, char);
+}
+
+function swapAdjacentChars(str) {
+    let arr = str.split('');
+    for (let i = 0; i < arr.length - 1; i += 2) {
+        let temp = arr[i];
+        arr[i] = arr[i + 1];
+        arr[i + 1] = temp;
+    }
+    return arr.join('');
+}
+function run5() {
+    const val = document.getElementById('t5-input').value;
+    document.getElementById('t5-out').innerText = "Результат: " + swapAdjacentChars(val);
+}
+
+function checkSpam(str) {
+    const spamWords = ["100% безкоштовно", "збільшення продажів", "тільки сьогодні", "не видаляйте"];
+    const lower = str.toLowerCase();
+    return spamWords.some(word => lower.includes(word.toLowerCase()));
+}
+function run6() {
+    const val = document.getElementById('t6-input').value;
+    document.getElementById('t6-out').innerText = "Містить спам: " + checkSpam(val);
+}
+
+function truncate(str, maxlength) {
+    maxlength = Number(maxlength);
+    if (str.length > maxlength) {
+        return str.slice(0, maxlength - 3) + "...";
+    }
+    return str;
+}
+function run7() {
+    const str = document.getElementById('t7-str').value;
+    const len = document.getElementById('t7-len').value;
+    document.getElementById('t7-out').innerText = "Результат: " + truncate(str, len);
+}
+
+function replaceDuplicates(str) {
+    return str.replace(/(.)\1+/g, '$1?');
+}
+function run8() {
+    const val = document.getElementById('t8-input').value;
+    document.getElementById('t8-out').innerText = "Результат: " + replaceDuplicates(val);
+}
+
+function capitalizeWords(str) {
+    return str.toLowerCase().replace(/(?:^|\s)\S/g, a => a.toUpperCase());
+}
+function run9() {
+    const val = document.getElementById('t9-input').value;
+    document.getElementById('t9-out').innerText = "Результат: " + capitalizeWords(val);
+}
+
+function findFirstRepeatedSubstring(str) {
+    for (let len = 2; len <= Math.floor(str.length / 2); len++) {
+        for (let i = 0; i <= str.length - len; i++) {
+            let sub = str.slice(i, i + len);
+            if (str.indexOf(sub, i + 1) !== -1) {
+                return sub;
+            }
+        }
+    }
+    return "Не знайдено";
+}
+function run10() {
+    const val = document.getElementById('t10-input').value;
+    document.getElementById('t10-out').innerText = "Результат: " + findFirstRepeatedSubstring(val);
+}
+</script>
+
+</body>
+</html>
+```<ElicitationsGroup>
