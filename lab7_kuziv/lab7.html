@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лабораторна робота №7 — Варіант 5</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f7f6;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 25px;
+        }
+
+        .task-card {
+            border: 1px solid #e0e0e0;
+            border-left: 5px solid #3498db;
+            background: #fafafa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .task-card h2 {
+            margin-top: 0;
+            color: #2980b9;
+            font-size: 1.25rem;
+        }
+
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            max-width: 400px;
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .btn-group {
+            margin-top: 15px;
+        }
+
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 9px 18px;
+            font-size: 14px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+            transition: background-color 0.2s;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        button.btn-clear {
+            background-color: #e74c3c;
+        }
+
+        button.btn-clear:hover {
+            background-color: #c0392b;
+        }
+
+        .output-box {
+            margin-top: 15px;
+            padding: 12px;
+            background: #eef7fc;
+            border: 1px solid #bce8f1;
+            border-radius: 6px;
+            color: #2c3e50;
+            font-size: 0.95rem;
+        }
+    </style>
+</head>
+<body>
+    <a href="../index.html">На головну сторінку</a>
+
+<div class="container">
+    <h1>Лабораторна робота №7<br><small style="font-size: 16px; color: #7f8c8d;">Варіант 5</small></h1>
+
+    <div class="task-card">
+        <h2>Завдання 1: Об'єкт часу та зміна на секунди</h2>
+        <div class="btn-group">
+            <button onclick="showCurrentTimeTask1()">1.1 Показати поточний час</button>
+        </div>
+        <div style="margin-top: 15px;">
+            <label for="task1-sec">1.2 Введіть кількість секунд для зміни (+ або -):</label>
+            <input type="number" id="task1-sec" placeholder="Наприклад: 30 або -45">
+            <button onclick="modifyTimeTask1()" style="margin-top: 8px;">Змінити час</button>
+        </div>
+        <div id="output-task1" class="output-box">Натисніть кнопку для відображення результату.</div>
+    </div>
+
+    <div class="task-card">
+        <h2>Завдання 2: Робота з датою та часом</h2>
+        
+        <p><strong>Завдання 2.1. Виведення поточної дати, дня тижня і часу</strong></p>
+        <button onclick="runTask2_1()">Виконати</button>
+        <div id="output-task2_1" class="output-box">Очікування дії...</div>
+
+        <hr style="margin: 20px 0; border: 0; border-top: 1px solid #ddd;">
+
+        <p><strong>Завдання 2.2. Визначення останнього дня місяця</strong></p>
+        <div class="form-group">
+            <label for="task2_2-year">Рік:</label>
+            <input type="number" id="task2_2-year" value="2026">
+        </div>
+        <div class="form-group">
+            <label for="task2_2-month">Номер місяця (1-12):</label>
+            <input type="number" id="task2_2-month" min="1" max="12" value="2">
+        </div>
+        <button onclick="runTask2_2()">Визначити останній день</button>
+        <div id="output-task2_2" class="output-box">Очікування дії...</div>
+
+        <hr style="margin: 20px 0; border: 0; border-top: 1px solid #ddd;">
+
+        <p><strong>Завдання 2.3. Секунди від початку/до кінця дня</strong></p>
+        <button onclick="runTask2_3()">Розрахувати секунди</button>
+        <div id="output-task2_3" class="output-box">Очікування дії...</div>
+    </div>
+
+    <div class="task-card">
+        <h2>Завдання 3, 4, 5: Демонстрація базових класів та статичних методів</h2>
+        <button onclick="runTasks345()">Запустити демонстрацію класів (Car, ElectricCar, MathHelper)</button>
+        <div id="output-tasks345" class="output-box">Очікування дії...</div>
+    </div>
+
+    <div class="task-card" style="border-left-color: #2ecc71;">
+        <h2>Завдання 6 (Варіант 5)</h2>
+        <p><em>Класи <code>Movie</code> та <code>Series</code> з успадкуванням та статичним методом.</em></p>
+        
+        <form id="variant5Form" onsubmit="event.preventDefault();">
+            <div class="form-group">
+                <label for="movie-title">Назва фільму / серіалу:</label>
+                <input type="text" id="movie-title" placeholder="Наприклад: Гра престолів">
+            </div>
+            <div class="form-group">
+                <label for="movie-director">Режисер:</label>
+                <input type="text" id="movie-director" placeholder="Наприклад: Девід Беніофф">
+            </div>
+            <div class="form-group">
+                <label for="movie-duration">Тривалість одного епізоду/фільму (хвилини):</label>
+                <input type="number" id="movie-duration" placeholder="Наприклад: 60">
+            </div>
+            <div class="form-group">
+                <label for="series-season">Номер сезону:</label>
+                <input type="number" id="series-season" placeholder="Наприклад: 1">
+            </div>
+            <div class="form-group">
+                <label for="series-episodes">Загальна кількість епізодів:</label>
+                <input type="number" id="series-episodes" placeholder="Наприклад: 10">
+            </div>
+
+            <div class="btn-group">
+                <button type="button" onclick="showVariant5Info()">Показати інформацію</button>
+                <button type="button" class="btn-clear" onclick="clearVariant5Form()">Очистити поля</button>
+            </div>
+        </form>
+
+        <div id="output-variant5" class="output-box">Заповніть форму та натисніть "Показати інформацію".</div>
+    </div>
+</div>
+
+<script>
+    const customTimeObj = {
+        hours: 0,
+        minutes: 0,
+        seconds: 0,
+
+        setCurrentTime() {
+            const now = new Date();
+            this.hours = now.getHours();
+            this.minutes = now.getMinutes();
+            this.seconds = now.getSeconds();
+        },
+
+        getTimeString() {
+            const h = String(this.hours).padStart(2, '0');
+            const m = String(this.minutes).padStart(2, '0');
+            const s = String(this.seconds).padStart(2, '0');
+            return `${h}:${m}:${s}`;
+        },
+
+        addSeconds(sec) {
+            let totalSeconds = this.hours * 3600 + this.minutes * 60 + this.seconds + Number(sec);
+            totalSeconds = ((totalSeconds % 86400) + 86400) % 86400;
+
+            this.hours = Math.floor(totalSeconds / 3600);
+            this.minutes = Math.floor((totalSeconds % 3600) / 60);
+            this.seconds = totalSeconds % 60;
+        }
+    };
+
+    function showCurrentTimeTask1() {
+        customTimeObj.setCurrentTime();
+        document.getElementById('output-task1').innerHTML = 
+            `Поточний час встановлено: <strong>${customTimeObj.getTimeString()}</strong>`;
+    }
+
+    function modifyTimeTask1() {
+        const secInput = document.getElementById('task1-sec').value;
+        if (secInput === '') {
+            document.getElementById('output-task1').innerHTML = `<span style="color:red;">Будь ласка, введіть кількість секунд!</span>`;
+            return;
+        }
+        customTimeObj.addSeconds(secInput);
+        document.getElementById('output-task1').innerHTML = 
+            `Час після зміни на ${secInput} с.: <strong>${customTimeObj.getTimeString()}</strong>`;
+    }
+
+
+    function runTask2_1() {
+        const now = new Date();
+        const months = [
+            "січня", "лютого", "березня", "квітня", "травня", "червня",
+            "липня", "серпня", "вересня", "жовтня", "листопада", "грудня"
+        ];
+        const days = [
+            "неділя", "понеділок", "вівторок", "середа", "четвер", "п'ятниця", "субота"
+        ];
+
+        const dateStr = `Дата: ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()} року`;
+        const dayStr = `День тижня: ${days[now.getDay()]}`;
+        const timeStr = `Час: ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+
+        document.getElementById('output-task2_1').innerHTML = `${dateStr}<br>${dayStr}<br>${timeStr}`;
+    }
+
+    function runTask2_2() {
+        const year = parseInt(document.getElementById('task2_2-year').value);
+        const month = parseInt(document.getElementById('task2_2-month').value);
+
+        if (isNaN(year) || isNaN(month) || month < 1 || month > 12) {
+            document.getElementById('output-task2_2').innerHTML = `<span style="color:red;">Введіть коректні значення року та місяця (1-12)!</span>`;
+            return;
+        }
+
+        const lastDayDate = new Date(year, month, 0);
+        document.getElementById('output-task2_2').innerHTML = 
+            `Останній день місяця №${month} у ${year} році: <strong>${lastDayDate.getDate()}</strong>`;
+    }
+
+    function getDaySecondsInfo() {
+        const now = new Date();
+        const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        const startOfNextDay = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+
+        const secondsPassed = Math.floor((now - startOfDay) / 1000);
+        const secondsRemaining = Math.floor((startOfNextDay - now) / 1000);
+
+        return { secondsPassed, secondsRemaining };
+    }
+
+    function runTask2_3() {
+        const info = getDaySecondsInfo();
+        document.getElementById('output-task2_3').innerHTML = 
+            `• Кількість секунд від початку сьогоднішнього дня: <strong>${info.secondsPassed}</strong> с.<br>` +
+            `• Кількість секунд до початку наступного дня: <strong>${info.secondsRemaining}</strong> с.`;
+    }
+
+
+    class Car {
+        constructor(brand, model, year) {
+            this.brand = brand;
+            this.model = model;
+            this.year = year;
+        }
+
+        info() {
+            return `Авто: ${this.brand} ${this.model}, ${this.year} року.`;
+        }
+    }
+
+    class ElectricCar extends Car {
+        constructor(brand, model, year, battery) {
+            super(brand, model, year);
+            this.battery = battery;
+        }
+
+        charge() {
+            return `${this.brand} ${this.model} заряджається... Батарея: ${this.battery} kWh`;
+        }
+    }
+
+    class MathHelper {
+        static add(a, b) {
+            return a + b;
+        }
+    }
+
+    function runTasks345() {
+        const car1 = new Car("Toyota", "Camry", 2020);
+        const tesla = new ElectricCar("Tesla", "Model 3", 2022, 75);
+        const sumResult = MathHelper.add(5, 7);
+
+        document.getElementById('output-tasks345').innerHTML = 
+            `<strong>Завдання 3:</strong> ${car1.info()}<br>` +
+            `<strong>Завдання 4:</strong> ${tesla.info()} | ${tesla.charge()}<br>` +
+            `<strong>Завдання 5 (статичний метод):</strong> MathHelper.add(5, 7) = <strong>${sumResult}</strong>`;
+    }
+
+
+    class Movie {
+        static category = "Кінематограф та Медіа";
+
+        static formatDuration(minutes) {
+            const mins = Number(minutes);
+            if (isNaN(mins) || mins <= 0) return "невідомо";
+            const h = Math.floor(mins / 60);
+            const m = mins % 60;
+            return h > 0 ? `${h} год ${m} хв` : `${m} хв`;
+        }
+
+        constructor(title, director, duration) {
+            this.title = title || "Без назви";
+            this.director = director || "Невідомий";
+            this.duration = Number(duration) || 0;
+        }
+
+        play() {
+            return `▶️ Відтворення фільму/серіалу "<strong>${this.title}</strong>" (Режисер: ${this.director}, тривалість серії/фільму: ${Movie.formatDuration(this.duration)})`;
+        }
+    }
+
+    class Series extends Movie {
+        constructor(title, director, duration, season, episodes) {
+            super(title, director, duration);
+            this.season = Number(season) || 1;
+            this.episodes = Number(episodes) || 1;
+        }
+
+        nextEpisode() {
+            return `⏭️ Перехід до наступного епізоду серіалу "<strong>${this.title}</strong>": Сезон ${this.season}, у сезоні всього серій: ${this.episodes}.`;
+        }
+    }
+
+    function showVariant5Info() {
+        const title = document.getElementById('movie-title').value.trim();
+        const director = document.getElementById('movie-director').value.trim();
+        const duration = document.getElementById('movie-duration').value;
+        const season = document.getElementById('series-season').value;
+        const episodes = document.getElementById('series-episodes').value;
+
+        if (!title || !director || !duration || !season || !episodes) {
+            document.getElementById('output-variant5').innerHTML = 
+                `<span style="color: red;">Будь ласка, заповніть усі поля форми!</span>`;
+            return;
+        }
+
+        const mySeries = new Series(title, director, duration, season, episodes);
+
+        document.getElementById('output-variant5').innerHTML = 
+            `<strong>Категорія (статичне поле):</strong> ${Movie.category}<br>` +
+            `<strong>Результат play():</strong> ${mySeries.play()}<br>` +
+            `<strong>Результат nextEpisode():</strong> ${mySeries.nextEpisode()}`;
+    }
+
+    function clearVariant5Form() {
+        document.getElementById('variant5Form').reset();
+        document.getElementById('output-variant5').innerHTML = 'Заповніть форму та натисніть "Показати інформацію".';
+    }
+</script>
+
+</body>
+</html>
